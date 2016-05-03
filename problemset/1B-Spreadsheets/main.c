@@ -90,12 +90,33 @@ void process(const char *str) {
     else a_to_r(str);
 }
 
+void print(int x) {
+    if (x--) print(x/26);
+    else putchar(x%26 + 'A');
+}
+
+void process_1(const char *str) {
+    int r, c;
+    const char *p;
+    if (sscanf(str, "R%dC%d", &r, &c) == 2) {
+        print(c);
+        printf("%d\n", r);
+    }
+    else {
+        for (c = 0, p = str; *p >= 'A'; p++) {
+            c = c * 26 + (*p ^ 64);
+        }
+        printf("R%sC%d\n", p, c);
+    }
+}
+
 int main(int argc, char *argv[]) {
     int repeat = 0;
     scanf("%d", &repeat);
     char s[32];
     while (repeat-- > 0 && scanf("%s", s) != EOF) {
-        process(s);
+        //process(s);
+        process_1(s);
     }
     return EXIT_SUCCESS;
 }
